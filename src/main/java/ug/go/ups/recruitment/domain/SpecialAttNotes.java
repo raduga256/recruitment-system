@@ -1,12 +1,13 @@
 package ug.go.ups.recruitment.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@NoArgsConstructor
 @Entity
 public class SpecialAttNotes {
 
@@ -14,11 +15,13 @@ public class SpecialAttNotes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String notes;
-    private SpecialAttribute specialAttribute;
 
-    public SpecialAttNotes(String notes, SpecialAttribute specialAttribute) {
+    @OneToOne
+    private Applicant applicant ;
+
+    public SpecialAttNotes(String notes, Applicant applicant) {
         this.notes = notes;
-        this.specialAttribute = specialAttribute;
+        this.applicant = applicant;
     }
 
     public Long getId() {
@@ -37,25 +40,12 @@ public class SpecialAttNotes {
         this.notes = notes;
     }
 
-    public SpecialAttribute getSpecialAttribute() {
-        return specialAttribute;
+    public Applicant getApplicant() {
+        return applicant;
     }
 
-    public void setSpecialAttribute(SpecialAttribute specialAttribute) {
-        this.specialAttribute = specialAttribute;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SpecialAttNotes that = (SpecialAttNotes) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setApplicant(Applicant applicant) {
+        this.applicant = applicant;
     }
 
     @Override
@@ -63,7 +53,7 @@ public class SpecialAttNotes {
         return "SpecialAttNotes{" +
                 "id=" + id +
                 ", notes='" + notes + '\'' +
-                ", specialAttribute=" + specialAttribute +
+                ", applicant=" + applicant +
                 '}';
     }
 }

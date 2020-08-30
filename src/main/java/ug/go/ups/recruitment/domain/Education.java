@@ -1,11 +1,11 @@
 package ug.go.ups.recruitment.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@NoArgsConstructor
 @Entity
 public class Education {
 
@@ -13,6 +13,9 @@ public class Education {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @OneToOne
+    private Applicant applicant;
 
     public Education(Long id, String name) {
         this.id = id;

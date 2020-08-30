@@ -1,31 +1,25 @@
 package ug.go.ups.recruitment.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@NoArgsConstructor
 @Entity
 public class InterviewResults {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
-    private String sectionA;
-    private String sectionB;
+    private String written;
     private String orals;
     private String remark;
 
-    public InterviewResults(Long id, Applicant applicant, String sectionA, String sectionB, String orals, String remark) {
-        this.id = id;
-        this.applicant = applicant;
-        this.sectionA = sectionA;
-        this.sectionB = sectionB;
-        this.orals = orals;
-        this.remark = remark;
-    }
 
     public Long getId() {
         return id;
@@ -43,20 +37,12 @@ public class InterviewResults {
         this.applicant = applicant;
     }
 
-    public String getSectionA() {
-        return sectionA;
+    public String getWritten() {
+        return written;
     }
 
-    public void setSectionA(String sectionA) {
-        this.sectionA = sectionA;
-    }
-
-    public String getSectionB() {
-        return sectionB;
-    }
-
-    public void setSectionB(String sectionB) {
-        this.sectionB = sectionB;
+    public void setWritten(String written) {
+        this.written = written;
     }
 
     public String getOrals() {
@@ -93,8 +79,7 @@ public class InterviewResults {
         return "InterviewResults{" +
                 "id=" + id +
                 ", applicant=" + applicant +
-                ", sectionA='" + sectionA + '\'' +
-                ", sectionB='" + sectionB + '\'' +
+                ", written='" + written + '\'' +
                 ", orals='" + orals + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';

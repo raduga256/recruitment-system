@@ -1,12 +1,24 @@
 package ug.go.ups.recruitment.domain;
 
-import java.util.Objects;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
+
+@NoArgsConstructor
+@Entity
 public class RecruitmentStage {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String descriptions;
+
+    @ManyToOne
+    @JoinColumn(name = "applicant_id")
+    private Applicant applicant;
 
     public RecruitmentStage(Long id, String name, String descriptions) {
         this.id = id;

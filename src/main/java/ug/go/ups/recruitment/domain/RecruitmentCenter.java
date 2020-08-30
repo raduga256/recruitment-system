@@ -1,30 +1,40 @@
 package ug.go.ups.recruitment.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@NoArgsConstructor
 @Entity
 public class RecruitmentCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
+
+    @OneToOne
+    @JoinColumn(name = "district_id")
     private District district;
     private LocalDate date;
     private Long targetOpenings;
     private Long filledPositions;
-    private Long variance;
+    private Long unFilled;
 
-    public RecruitmentCenter(String code, District district, LocalDate date, Long targetOpenings, Long filledPositions, Long variance) {
+    @OneToMany(mappedBy = "center")
+    private Set<Applicant> applicants = new HashSet<>();
+
+    public RecruitmentCenter(String code, District district, LocalDate date, Long targetOpenings,
+                             Long filledPositions, Long unFilled) {
         this.code = code;
         this.district = district;
         this.date = date;
         this.targetOpenings = targetOpenings;
         this.filledPositions = filledPositions;
-        this.variance = variance;
+        this.unFilled = unFilled;
     }
 
     public Long getId() {
@@ -75,11 +85,37 @@ public class RecruitmentCenter {
         this.filledPositions = filledPositions;
     }
 
-    public Long getVariance() {
-        return variance;
+    public Long getUnFilled() {
+        return unFilled;
     }
 
-    public void setVariance(Long variance) {
-        this.variance = variance;
+    public void setUnFilled(Long unFilled) {
+        this.unFilled = unFilled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecruitmentCenter that = (RecruitmentCenter) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "RecruitmentCenter{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", district=" + district +
+                ", date=" + date +
+                ", targetOpenings=" + targetOpenings +
+                ", filledPositions=" + filledPositions +
+                ", unFilled=" + unFilled +
+                '}';
     }
 }

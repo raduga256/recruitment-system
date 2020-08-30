@@ -1,10 +1,13 @@
 package ug.go.ups.recruitment.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+@NoArgsConstructor
 @Entity
 public class SpecialAttribute {
 
@@ -13,13 +16,14 @@ public class SpecialAttribute {
     private Long id;
     private String name;
     private String description;
-    private SpecialAttNotes notes;
 
-    public SpecialAttribute(Long id, String name, String description, SpecialAttNotes notes) {
+    @OneToOne
+    private Applicant applicant;
+
+    public SpecialAttribute(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.notes = notes;
     }
 
     public Long getId() {
@@ -46,13 +50,6 @@ public class SpecialAttribute {
         this.description = description;
     }
 
-    public SpecialAttNotes getNotes() {
-        return notes;
-    }
-
-    public void setNotes(SpecialAttNotes notes) {
-        this.notes = notes;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -73,7 +70,6 @@ public class SpecialAttribute {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", notes=" + notes +
                 '}';
     }
 }

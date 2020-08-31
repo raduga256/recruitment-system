@@ -16,8 +16,7 @@ public class RecruitmentCenter {
     private Long id;
     private String code;
 
-    @OneToOne
-    @JoinColumn(name = "district_id")
+    @OneToOne(cascade = CascadeType.ALL)
     private District district;
     private LocalDate date;
     private Long targetOpenings;

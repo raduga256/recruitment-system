@@ -15,7 +15,7 @@ public class District {
 
     private String name;
 
-    @OneToOne(mappedBy = "district")
+    @OneToOne
     private RecruitmentCenter center;
 
     public Long getId() {

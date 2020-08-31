@@ -25,11 +25,11 @@ public class Applicant {
     private Gender gender;
     private String telNo;
     private LocalDate dob;
+
     @ManyToOne
-    @JoinColumn(name = "center_id")
     private RecruitmentCenter center;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Education educationLevel;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "applicant")
@@ -43,6 +43,7 @@ public class Applicant {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "applicant")
     private Set<RecruitmentStage> recruitmentStage = new HashSet<>();
+    @Lob
     private Byte[] image;
 
     public Applicant(String nin, String firstName, String lastName, Long applicantNo, int age,

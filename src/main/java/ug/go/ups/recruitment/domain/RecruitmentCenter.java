@@ -15,6 +15,7 @@ public class RecruitmentCenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
+    private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
     private District district;
@@ -90,6 +91,14 @@ public class RecruitmentCenter {
 
     public void setUnFilled(Long unFilled) {
         this.unFilled = unFilled;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

@@ -19,17 +19,21 @@ public class Applicant {
     private String nin;
     private String firstName;
     private String lastName;
-    private Long applicantNo;
     private int age;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String telNo;
-    private LocalDate dob;
+
+    private LocalDate birthDate;
+
+
+    @ManyToOne
+    private District dob;
 
     @ManyToOne
     private RecruitmentCenter center;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Education educationLevel;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "applicant")
@@ -46,22 +50,21 @@ public class Applicant {
     @Lob
     private Byte[] image;
 
-    public Applicant(String nin, String firstName, String lastName, Long applicantNo, int age,
-                     Gender gender, String telNo, LocalDate dob, RecruitmentCenter center,
-                     Education educationLevel, SpecialAttribute specialAttribute,
-                     SpecialAttNotes specialAttNotes,  Byte[] image) {
+    public Applicant(String nin, String firstName, String lastName, int age, Gender gender, String telNo, LocalDate birthDate, District dob, RecruitmentCenter center, Education educationLevel, Set<InterviewResults> interviewResults, SpecialAttribute specialAttribute, SpecialAttNotes specialAttNotes, Set<RecruitmentStage> recruitmentStage, Byte[] image) {
         this.nin = nin;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.applicantNo = applicantNo;
         this.age = age;
         this.gender = gender;
         this.telNo = telNo;
+        this.birthDate = birthDate;
         this.dob = dob;
         this.center = center;
         this.educationLevel = educationLevel;
+        this.interviewResults = interviewResults;
         this.specialAttribute = specialAttribute;
         this.specialAttNotes = specialAttNotes;
+        this.recruitmentStage = recruitmentStage;
         this.image = image;
     }
 
@@ -97,14 +100,6 @@ public class Applicant {
         this.lastName = lastName;
     }
 
-    public Long getApplicantNo() {
-        return applicantNo;
-    }
-
-    public void setApplicantNo(Long applicantNo) {
-        this.applicantNo = applicantNo;
-    }
-
     public int getAge() {
         return age;
     }
@@ -129,11 +124,19 @@ public class Applicant {
         this.telNo = telNo;
     }
 
-    public LocalDate getDob() {
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public District getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(District dob) {
         this.dob = dob;
     }
 
@@ -153,6 +156,13 @@ public class Applicant {
         this.educationLevel = educationLevel;
     }
 
+    public Set<InterviewResults> getInterviewResults() {
+        return interviewResults;
+    }
+
+    public void setInterviewResults(Set<InterviewResults> interviewResults) {
+        this.interviewResults = interviewResults;
+    }
 
     public SpecialAttribute getSpecialAttribute() {
         return specialAttribute;
@@ -191,11 +201,7 @@ public class Applicant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Applicant applicant = (Applicant) o;
-        return id.equals(applicant.id) &&
-                Objects.equals(specialAttribute, applicant.specialAttribute) &&
-                Objects.equals(specialAttNotes, applicant.specialAttNotes) &&
-                Objects.equals(recruitmentStage, applicant.recruitmentStage) &&
-                Arrays.equals(image, applicant.image);
+        return id.equals(applicant.id);
     }
 
     @Override
@@ -210,7 +216,6 @@ public class Applicant {
                 ", nin='" + nin + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", applicantNo=" + applicantNo +
                 ", age=" + age +
                 ", gender=" + gender +
                 ", telNo='" + telNo + '\'' +

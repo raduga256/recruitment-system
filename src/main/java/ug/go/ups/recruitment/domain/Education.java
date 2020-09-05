@@ -14,7 +14,7 @@ public class Education {
     private Long id;
     private String name;
 
-    @OneToOne
+    @OneToOne(mappedBy = "educationLevel", cascade = CascadeType.ALL)
     private Applicant applicant;
 
     public Education(Long id, String name) {

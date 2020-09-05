@@ -3,7 +3,9 @@ package ug.go.ups.recruitment.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity
@@ -15,15 +17,14 @@ public class District {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(mappedBy = "district")
     private RecruitmentCenter center;
+
+    @OneToMany(mappedBy = "dob")
+    private Set<Applicant> applicants = new HashSet<>();
 
     public Long getId() {
         return id;
-    }
-
-    public District(String name) {
-        this.name = name;
     }
 
     public void setId(Long id) {
@@ -36,6 +37,22 @@ public class District {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public RecruitmentCenter getCenter() {
+        return center;
+    }
+
+    public void setCenter(RecruitmentCenter center) {
+        this.center = center;
+    }
+
+    public Set<Applicant> getApplicants() {
+        return applicants;
+    }
+
+    public void setApplicants(Set<Applicant> applicants) {
+        this.applicants = applicants;
     }
 
     @Override

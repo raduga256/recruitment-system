@@ -13,9 +13,12 @@ import ug.go.ups.recruitment.repositories.EducationRepository;
 import ug.go.ups.recruitment.repositories.RecruitmentCenterRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Component
 public class ApplicantBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -80,30 +83,47 @@ public class ApplicantBootstrap implements ApplicationListener<ContextRefreshedE
             throw new RuntimeException("Expected Recruitment Center Not Found");
         }
 
-        //get recruitment Optional into class object
-        RecruitmentCenter southWestern = centerOptional.get();
-
         //Create new applicant Okech
         Applicant oketchApplicant = new Applicant();
         oketchApplicant.setAge(24);
-        oketchApplicant.setLastName("Ntalo");
+        oketchApplicant.setLastName("Ntalo Test ");
         oketchApplicant.setFirstName("Moses");
         oketchApplicant.setEducationLevel(oLevel);
-        oketchApplicant.setDob(kampala);
-        oketchApplicant.setCenter(southWestern);
+        oketchApplicant.setDob(gulu);
+
+        //get recruitment Optional into class object
+        RecruitmentCenter southWestern = centerOptional.get();
+        //Set District
+        southWestern.setDistrict(kampala);
+
+        //Create a new Recruitment Center
+        RecruitmentCenter kigezi = new RecruitmentCenter("KIG","Kigezi",kampala, LocalDate.parse("2020-08-14"), 0L, 0L, 0L);
+        centerRepository.save(kigezi);
+
+        kigezi.getApplicants().add(oketchApplicant);
+
+
+         oketchApplicant.setCenter(kigezi);
+
+
+        //Intialise Applicant
+
+
+        //oketchApplicant.setDob(kampala);
+
 
         //Create new applicant Job
-        Applicant jobApplicant = new Applicant();
-        jobApplicant.setAge(24);
-        jobApplicant.setLastName("Owamani");
-        jobApplicant.setFirstName("Job");
-        jobApplicant.setEducationLevel(oLevel);
-        jobApplicant.setDob(gulu);
-        jobApplicant.setCenter(southWestern);
+//        Applicant jobApplicant = new Applicant();
+//        jobApplicant.setAge(24);
+//        jobApplicant.setLastName("Owamani");
+//        jobApplicant.setFirstName("Job");
+//        jobApplicant.setEducationLevel(oLevel);
+//        jobApplicant.setDob(gulu);
+//        jobApplicant.setCenter(southWestern);
 
         //Adding the two applicants to the List
         applicants.add(oketchApplicant);
-        applicants.add(jobApplicant);
+//        applicants.add(jobApplicant);
 
 
 

@@ -50,6 +50,14 @@ public class RecruitmentStage {
         this.descriptions = descriptions;
     }
 
+    public Applicant getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(Applicant applicant) {
+        this.applicant = applicant;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,6 @@
 package ug.go.ups.recruitment.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Applicant {
 
@@ -27,10 +29,10 @@ public class Applicant {
     private LocalDate birthDate;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private District dob;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private RecruitmentCenter center;
 
     @OneToOne

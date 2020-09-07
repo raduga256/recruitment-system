@@ -9,34 +9,23 @@ import ug.go.ups.recruitment.domain.Education;
 import ug.go.ups.recruitment.repositories.ApplicantRepository;
 import ug.go.ups.recruitment.repositories.DistrictRepository;
 import ug.go.ups.recruitment.repositories.EducationRepository;
+import ug.go.ups.recruitment.services.ApplicantService;
 
 import java.util.Optional;
 
 @Controller
 public class IndexController {
 
-    private final ApplicantRepository applicantRepository;
-    private final DistrictRepository districtRepository;
-    private final EducationRepository educationRepository;
+    private final ApplicantService applicantService;
 
-    public IndexController(ApplicantRepository applicantRepository, DistrictRepository districtRepository, EducationRepository educationRepository) {
-        this.applicantRepository = applicantRepository;
-        this.districtRepository = districtRepository;
-        this.educationRepository = educationRepository;
+    public IndexController(ApplicantService applicantService) {
+        this.applicantService = applicantService;
     }
-
-
 
     @RequestMapping({"", "/", "/index"})
     public String getIndexPage(Model model){
 
-        Optional<Applicant> applicantOptional = applicantRepository.findByFirstName("PETERO");
-        Optional<Education> educationOptional = educationRepository.findByName("O-Level");
-        Optional<District> districtOptional = districtRepository.findByName("Kampala");
-
-        System.out.println("Applicant ID - "+applicantOptional.get().getId() + " Last Name - "+applicantOptional.get().getLastName());
-        System.out.println("Education Level - "+educationOptional.get().getId());
-        System.out.println("District Name - "+districtOptional.get());
+       model.addAttribute("applicants", applicantService.getApplicants());
 
         return "index";
     }

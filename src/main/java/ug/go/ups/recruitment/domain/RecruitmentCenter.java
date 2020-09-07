@@ -16,8 +16,7 @@ public class RecruitmentCenter {
     private Long id;
     private String code;
     private String name;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private District district;
     private LocalDate date;
     private Long targetOpenings;
@@ -27,9 +26,10 @@ public class RecruitmentCenter {
     @OneToMany(mappedBy = "center")
     private Set<Applicant> applicants = new HashSet<>();
 
-    public RecruitmentCenter(String code, District district, LocalDate date, Long targetOpenings,
-                             Long filledPositions, Long unFilled) {
+    public RecruitmentCenter(String code, String name, District district, LocalDate date,
+                             Long targetOpenings, Long filledPositions, Long unFilled) {
         this.code = code;
+        this.name = name;
         this.district = district;
         this.date = date;
         this.targetOpenings = targetOpenings;
@@ -51,6 +51,14 @@ public class RecruitmentCenter {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public District getDistrict() {
@@ -93,12 +101,12 @@ public class RecruitmentCenter {
         this.unFilled = unFilled;
     }
 
-    public String getName() {
-        return name;
+    public Set<Applicant> getApplicants() {
+        return applicants;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setApplicants(Set<Applicant> applicants) {
+        this.applicants = applicants;
     }
 
     @Override

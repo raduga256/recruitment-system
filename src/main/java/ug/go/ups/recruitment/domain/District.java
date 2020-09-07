@@ -23,6 +23,11 @@ public class District {
     @OneToMany(mappedBy = "dob")
     private Set<Applicant> applicants = new HashSet<>();
 
+    public District(String name, RecruitmentCenter center) {
+        this.name = name;
+        this.center = center;
+    }
+
     public Long getId() {
         return id;
     }

@@ -3,10 +3,7 @@ package ug.go.ups.recruitment.bootstrap;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import ug.go.ups.recruitment.domain.Applicant;
-import ug.go.ups.recruitment.domain.District;
-import ug.go.ups.recruitment.domain.Education;
-import ug.go.ups.recruitment.domain.RecruitmentCenter;
+import ug.go.ups.recruitment.domain.*;
 import ug.go.ups.recruitment.repositories.ApplicantRepository;
 import ug.go.ups.recruitment.repositories.DistrictRepository;
 import ug.go.ups.recruitment.repositories.EducationRepository;
@@ -88,6 +85,7 @@ public class ApplicantBootstrap implements ApplicationListener<ContextRefreshedE
         oketchApplicant.setAge(24);
         oketchApplicant.setLastName("Ntalo Test ");
         oketchApplicant.setFirstName("Moses");
+        oketchApplicant.setGender(Gender.MALE);
         oketchApplicant.setEducationLevel(oLevel);
         oketchApplicant.setDob(gulu);
 
